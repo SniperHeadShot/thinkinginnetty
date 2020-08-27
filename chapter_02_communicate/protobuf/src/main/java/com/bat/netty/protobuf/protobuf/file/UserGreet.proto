@@ -1,0 +1,9 @@
+package netty;
+
+option java_package = "com.bat.netty.protobuf.protobuf";
+option java_outer_classname = "UserGreetProto";
+
+message UserGreet {
+    required string username = 1;
+    required string greet = 2;
+}
