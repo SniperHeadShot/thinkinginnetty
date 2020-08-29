@@ -16,6 +16,7 @@
         <module>protobuf</module>
         <module>http</module>
         <module>websocket</module>
+        <module>customprotocol</module>
     </modules>
 
 </project>
