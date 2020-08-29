@@ -1,8 +1,11 @@
 package com.bat.netty.protobuf.client;
 
+import com.bat.netty.protobuf.protobuf.UserChatProto;
 import com.bat.netty.protobuf.protobuf.UserGreetProto;
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
+
+import java.util.Random;
 
 /**
  * 自定义 {@link io.netty.channel.ChannelHandler} 实现
@@ -12,11 +15,17 @@ import io.netty.channel.ChannelHandlerContext;
  **/
 public class ProtobufClientChannelHandler extends ChannelHandlerAdapter {
 
+    private static final Random RANDOM = new Random();
+
     @Override
     public void channelActive(ChannelHandlerContext ctx) {
         System.out.println("ProtobufServerChannelHandler#channelActive() ...");
         for (int i = 0; i < 100; i++) {
-            ctx.write(buildGreet(i));
+            if (RANDOM.nextBoolean()) {
+                ctx.write(buildGreet(i));
+            } else {
+                ctx.write(buildChat(i));
+            }
         }
         ctx.flush();
     }
@@ -28,10 +37,16 @@ public class ProtobufClientChannelHandler extends ChannelHandlerAdapter {
                 .build();
     }
 
+    private UserChatProto.UserChat buildChat(int index) {
+        return UserChatProto.UserChat.newBuilder()
+                .setUsername("protobuf client" + index)
+                .setChat("how are you?")
+                .build();
+    }
+
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
         System.out.println("ProtobufServerChannelHandler#channelRead() ...");
-        UserGreetProto.UserGreet req = (UserGreetProto.UserGreet) msg;
-        System.out.println("client receive: " + req.getGreet());
+        System.out.println("client receive: " + msg);
     }
 }

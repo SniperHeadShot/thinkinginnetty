@@ -1,0 +1,9 @@
+package netty;
+
+option java_package = "com.bat.netty.protobuf.protobuf";
+option java_outer_classname = "UserChatProto";
+
+message UserChat {
+    required string username = 1;
+    required string chat = 2;
+}

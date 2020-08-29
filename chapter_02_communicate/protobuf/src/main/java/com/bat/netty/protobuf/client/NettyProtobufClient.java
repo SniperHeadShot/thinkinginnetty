@@ -1,5 +1,6 @@
 package com.bat.netty.protobuf.client;
 
+import com.bat.netty.protobuf.protobuf.UserChatProto;
 import com.bat.netty.protobuf.protobuf.UserGreetProto;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
@@ -40,6 +41,7 @@ public class NettyProtobufClient {
                         protected void initChannel(SocketChannel ch) {
                             ch.pipeline().addLast(new ProtobufVarint32FrameDecoder());
                             ch.pipeline().addLast(new ProtobufDecoder(UserGreetProto.UserGreet.getDefaultInstance()));
+                            ch.pipeline().addLast(new ProtobufDecoder(UserChatProto.UserChat.getDefaultInstance()));
                             ch.pipeline().addLast(new ProtobufVarint32LengthFieldPrepender());
                             ch.pipeline().addLast(new ProtobufEncoder());
                             ch.pipeline().addLast(new ProtobufClientChannelHandler());
