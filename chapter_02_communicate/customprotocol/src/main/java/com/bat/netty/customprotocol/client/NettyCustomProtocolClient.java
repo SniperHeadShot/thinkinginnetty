@@ -8,6 +8,7 @@ import com.bat.netty.customprotocol.constant.Constant;
 import com.bat.netty.customprotocol.entity.Header;
 import com.bat.netty.customprotocol.entity.NettyMessage;
 import com.bat.netty.customprotocol.enums.MessageType;
+import com.bat.netty.customprotocol.util.SessionIDUtil;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -77,6 +78,7 @@ public class NettyCustomProtocolClient {
         NettyMessage message = new NettyMessage();
         Header header = new Header();
         header.setType(MessageType.HEARTBEAT_REQ.value());
+        header.setSessionID(SessionIDUtil.buildSessionID());
         message.setHeader(header);
         return message;
     }

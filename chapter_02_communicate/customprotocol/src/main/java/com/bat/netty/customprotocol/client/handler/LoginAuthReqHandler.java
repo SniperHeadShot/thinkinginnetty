@@ -3,6 +3,7 @@ package com.bat.netty.customprotocol.client.handler;
 import com.bat.netty.customprotocol.entity.Header;
 import com.bat.netty.customprotocol.entity.NettyMessage;
 import com.bat.netty.customprotocol.enums.MessageType;
+import com.bat.netty.customprotocol.util.SessionIDUtil;
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
 
@@ -22,6 +23,7 @@ public class LoginAuthReqHandler extends ChannelHandlerAdapter {
         NettyMessage message = new NettyMessage();
         Header header = new Header();
         header.setType(MessageType.LOGIN_REQ.value());
+        header.setSessionID(SessionIDUtil.buildSessionID());
         message.setHeader(header);
         return message;
     }

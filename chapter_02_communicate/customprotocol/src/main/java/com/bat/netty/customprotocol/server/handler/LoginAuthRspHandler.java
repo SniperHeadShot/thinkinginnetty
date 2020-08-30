@@ -3,6 +3,7 @@ package com.bat.netty.customprotocol.server.handler;
 import com.bat.netty.customprotocol.entity.Header;
 import com.bat.netty.customprotocol.entity.NettyMessage;
 import com.bat.netty.customprotocol.enums.MessageType;
+import com.bat.netty.customprotocol.util.SessionIDUtil;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
@@ -60,6 +61,7 @@ public class LoginAuthRspHandler extends SimpleChannelInboundHandler<NettyMessag
         NettyMessage message = new NettyMessage();
         Header header = new Header();
         header.setType(MessageType.LOGIN_RESP.value());
+        header.setSessionID(SessionIDUtil.buildSessionID());
         message.setHeader(header);
         message.setBody(rspMsg);
         return message;
