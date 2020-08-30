@@ -3,8 +3,8 @@ package com.bat.netty.customprotocol.server.handler;
 import com.bat.netty.customprotocol.entity.Header;
 import com.bat.netty.customprotocol.entity.NettyMessage;
 import com.bat.netty.customprotocol.enums.MessageType;
-import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.SimpleChannelInboundHandler;
 
 import java.net.InetSocketAddress;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -16,7 +16,7 @@ import java.util.concurrent.CopyOnWriteArraySet;
  * @author ZhengYu
  * @version 1.0 2020/8/29 10:36
  **/
-public class LoginAuthRspHandler extends ChannelHandlerAdapter {
+public class LoginAuthRspHandler extends SimpleChannelInboundHandler<NettyMessage> {
 
     // 重复登陆校验
     private CopyOnWriteArraySet<String> nodeCheck = new CopyOnWriteArraySet<>();
@@ -27,8 +27,7 @@ public class LoginAuthRspHandler extends ChannelHandlerAdapter {
     }};
 
     @Override
-    public void channelRead(ChannelHandlerContext ctx, Object msg) {
-        NettyMessage message = (NettyMessage) msg;
+    protected void channelRead0(ChannelHandlerContext ctx, NettyMessage message) {
         if (message != null && message.getHeader().getType() == MessageType.LOGIN_REQ.value()) {
             String nodeIndex = ctx.channel().remoteAddress().toString();
             NettyMessage loginResp = null;
@@ -53,7 +52,7 @@ public class LoginAuthRspHandler extends ChannelHandlerAdapter {
             System.out.println(String.format("%s login", ip));
             ctx.writeAndFlush(loginResp);
         } else {
-            ctx.fireChannelRead(msg);
+            ctx.fireChannelRead(message);
         }
     }
 
@@ -64,10 +63,5 @@ public class LoginAuthRspHandler extends ChannelHandlerAdapter {
         message.setHeader(header);
         message.setBody(rspMsg);
         return message;
-    }
-
-    @Override
-    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
-        ctx.fireExceptionCaught(cause);
     }
 }

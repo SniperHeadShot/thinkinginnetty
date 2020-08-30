@@ -19,7 +19,6 @@ public class HeartbeatReqHandler extends ChannelHandlerAdapter {
 
     private ScheduledFuture<?> heartBeatTask;
 
-    @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
         NettyMessage message = (NettyMessage) msg;
         if (message != null && message.getHeader().getType() == MessageType.LOGIN_RESP.value()) {

@@ -14,7 +14,6 @@ import io.netty.channel.ChannelHandlerContext;
  **/
 public class LoginAuthReqHandler extends ChannelHandlerAdapter {
 
-    @Override
     public void channelActive(ChannelHandlerContext ctx) {
         ctx.writeAndFlush(buildLoginReq());
     }
@@ -27,7 +26,6 @@ public class LoginAuthReqHandler extends ChannelHandlerAdapter {
         return message;
     }
 
-    @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
         NettyMessage message = (NettyMessage) msg;
         if (message != null && message.getHeader().getType() == MessageType.LOGIN_RESP.value()) {
