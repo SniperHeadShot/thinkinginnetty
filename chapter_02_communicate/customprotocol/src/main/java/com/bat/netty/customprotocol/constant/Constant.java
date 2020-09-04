@@ -8,7 +8,7 @@ package com.bat.netty.customprotocol.constant;
  **/
 public interface Constant {
 
-    public static final String REMOTE_IP = "192.168.9.27";
+    String REMOTE_IP = "127.0.0.1";
 
-    public static final int PORT = 15050;
+    int PORT = 15050;
 }

@@ -53,7 +53,7 @@ public class NettyCustomProtocolServer {
                     });
 
             // 绑定端口，同步等待成功
-            b.bind(Constant.REMOTE_IP, Constant.PORT).sync();
+            b.bind(Constant.PORT).sync();
             System.out.println(String.format("Netty Server start at %s:%d", Constant.REMOTE_IP, Constant.PORT));
         } catch (InterruptedException e) {
             e.printStackTrace();

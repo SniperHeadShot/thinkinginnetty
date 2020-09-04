@@ -2,6 +2,8 @@ package com.bat.netty.protobuf.server;
 
 import com.bat.netty.protobuf.protobuf.UserChatProto;
 import com.bat.netty.protobuf.protobuf.UserGreetProto;
+import com.bat.netty.protobuf.protobuf.codec.CustomProtobufDecoder;
+import com.bat.netty.protobuf.protobuf.codec.CustomProtobufEncoder;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -39,7 +41,7 @@ public class NettyProtobufServer {
             b.group(bossGroup, workerGroup)
                     .channel(NioServerSocketChannel.class)
                     .option(ChannelOption.SO_BACKLOG, 1024)
-                    .handler(new LoggingHandler(LogLevel.DEBUG))
+                    .handler(new LoggingHandler(LogLevel.INFO))
                     .childHandler(new ChannelInitializer<SocketChannel>() {
 
                         @Override
@@ -49,7 +51,8 @@ public class NettyProtobufServer {
                             ch.pipeline().addLast(new ProtobufDecoder(UserChatProto.UserChat.getDefaultInstance()));
                             ch.pipeline().addLast(new ProtobufVarint32LengthFieldPrepender());
                             ch.pipeline().addLast(new ProtobufEncoder());
-                            ch.pipeline().addLast(new ProtobufServerChannelHandler());
+                            ch.pipeline().addLast(new ProtobufServerUserGreetChannelHandler());
+                            ch.pipeline().addLast(new ProtobufServerUserChatChannelHandler());
                         }
                     });
 

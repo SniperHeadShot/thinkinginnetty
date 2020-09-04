@@ -17,7 +17,7 @@ public class WebSocketServerHandler extends SimpleChannelInboundHandler<Object> 
     private WebSocketServerHandshaker handshaker;
 
     @Override
-    protected void messageReceived(ChannelHandlerContext ctx, Object msg) {
+    protected void channelRead0(ChannelHandlerContext ctx, Object msg) {
         System.out.println("WebSocketServerHandler#messageReceived()");
         if (msg instanceof FullHttpMessage) {
             handleHttpRequest(ctx, (FullHttpRequest) msg);

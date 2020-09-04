@@ -8,7 +8,10 @@ import io.netty.handler.stream.ChunkedFile;
 import io.netty.util.CharsetUtil;
 
 import javax.activation.MimetypesFileTypeMap;
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.RandomAccessFile;
+import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.Objects;
 import java.util.regex.Pattern;
@@ -35,8 +38,9 @@ public class HttpFileServerHandler extends SimpleChannelInboundHandler<FullHttpR
         this.url = url;
     }
 
+
     @Override
-    protected void messageReceived(ChannelHandlerContext ctx, FullHttpRequest request) throws IOException {
+    protected void channelRead0(ChannelHandlerContext ctx, FullHttpRequest request) throws Exception {
         if (!request.getDecoderResult().isSuccess()) {
             sendError(ctx, BAD_REQUEST);
             return;

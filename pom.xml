@@ -12,6 +12,7 @@
         <module>chapter_01_quickstart</module>
         <module>chapter_02_communicate</module>
         <module>common</module>
+        <module>chapter_03_component</module>
     </modules>
 
     <dependencies>

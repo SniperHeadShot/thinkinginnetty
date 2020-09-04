@@ -46,7 +46,7 @@ public class NettyCustomProtocolClient {
                             ch.pipeline().addLast(new NettyMessageProtocolDecoder());
                             ch.pipeline().addLast(new NettyMessageProtocolEncoder());
 
-                            ch.pipeline().addLast(new LoggingHandler(LogLevel.DEBUG));
+                            ch.pipeline().addLast(new LoggingHandler(LogLevel.INFO));
 
 //                            ch.pipeline().addLast(new LoginAuthReqHandler());
 //                            ch.pipeline().addLast(new HeartbeatReqHandler());
@@ -84,6 +84,6 @@ public class NettyCustomProtocolClient {
     }
 
     public static void main(String[] args) {
-        new NettyCustomProtocolClient().connect(Constant.REMOTE_IP, Constant.PORT);
+        new NettyCustomProtocolClient().connect("192.168.9.204", Constant.PORT);
     }
 }
